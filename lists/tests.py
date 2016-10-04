@@ -1,6 +1,7 @@
 from django.core.urlresolvers import resolve
 from django.test import TestCase
 from django.http import HttpRequest
+from django.template.loader import render_to_string
 
 from lists.views import home_page   # 在 views.py 中我们先 home_page,为了通过测试
 
@@ -24,7 +25,9 @@ class HomePageTest(TestCase):
         request = HttpRequest()
         # home_page()视图获取请求,返回响应.
         response = home_page(request)
+        expected_html = render_to_string('home.html')
+        self.assertEqual(response.content.decode(), expected_html)
         # response.content 是 原始字节,不是 字符串,因此使用 b''
-        self.assertTrue(response.content.startswith(b'<html>'))
-        self.assertIn(b'<title>To-Do lists</title>', response.content)
-        self.assertTrue(response.content.endswith(b'</html>'))
+        # self.assertTrue(response.content.startswith(b'<html>'))
+        # self.assertIn(b'<title>To-Do lists</title>', response.content)
+        # self.assertTrue(response.content.endswith(b'</html>'))
