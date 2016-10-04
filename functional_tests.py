@@ -5,7 +5,6 @@ import unittest
 
 
 class NewVisitorTest(unittest.TestCase):
-
     def setUp(self):
         """
         就算 test 出错,这两个方法也会照样执行
