@@ -3,6 +3,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
+import time
 
 
 class NewVisitorTest(unittest.TestCase):
@@ -48,11 +49,13 @@ class NewVisitorTest(unittest.TestCase):
         # 不但可以输入内容,还可以发送 特殊的按键,如ENTER/CTRL等修改键
         inputbox.send_keys('keys.ENTER')
 
+        # time.sleep(20)
         table = self.browser.find_element_by_id('id_list_table')    # 找不到触发异常
         rows = table.find_elements_by_tag_name('tr')    # 找不到返回一个 空 list
         # any()生成器表达器,类似于 列表推导,但更出色
-        self.assertTrue(
-            any(row.text == '1. Buy peacock feathers' for row in rows), "New to-do item did not appear in table")
+        # self.assertTrue(any(row.text == '1. Buy peacock feathers' for row in rows),
+        #                "New to-do item did not appear in table -- its text was:\n%s" % (table.text,))
+        self.assertIn('1. Buy peacock feathers', [row.text for row in rows])
 
         # 页面中又显示了一个文本框,可以输入其他的待办事项
         # 她输入了 "Use peacock feathers to make a fly"

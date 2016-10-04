@@ -25,9 +25,23 @@ class HomePageTest(TestCase):
         request = HttpRequest()
         # home_page()视图获取请求,返回响应.
         response = home_page(request)
-        expected_html = render_to_string('home.html')
+        expected_html = render_to_string(
+            'home.html', {'new_item_text': '1. Buy peacock feathers'})
+        #print(response.content.decode())
+        # decode() 把原始字符 转换成 Python 的 Unicode 字符串
+        print(response.content.decode())
+        print(expected_html)
         self.assertEqual(response.content.decode(), expected_html)
         # response.content 是 原始字节,不是 字符串,因此使用 b''
         # self.assertTrue(response.content.startswith(b'<html>'))
         # self.assertIn(b'<title>To-Do lists</title>', response.content)
         # self.assertTrue(response.content.endswith(b'</html>'))
+        #
+
+    def test_home_page_can_save_a_POST_requet(self):
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['item_text'] = '1. Buy peacock feathers'
+
+        response = home_page(request)
+        self.assertIn('1. Buy peacock feathers', response.content.decode())
