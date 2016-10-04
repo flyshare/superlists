@@ -52,7 +52,7 @@ class NewVisitorTest(unittest.TestCase):
         rows = table.find_elements_by_tag_name('tr')    # 找不到返回一个 空 list
         # any()生成器表达器,类似于 列表推导,但更出色
         self.assertTrue(
-            any(row.text == '1. Buy peacock feathers' for row in rows))
+            any(row.text == '1. Buy peacock feathers' for row in rows), "New to-do item did not appear in table")
 
         # 页面中又显示了一个文本框,可以输入其他的待办事项
         # 她输入了 "Use peacock feathers to make a fly"
